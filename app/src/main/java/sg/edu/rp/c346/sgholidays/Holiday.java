@@ -59,7 +59,7 @@ public class Holiday extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CurrentHolidays selectedHoliday;
-                if (name.equalsIgnoreCase("Secular")) {
+                if (name.contentEquals("Secular")) {
                     selectedHoliday = secularHolidays.get(position);
                 } else {
                     selectedHoliday = EthnicAndReligionHolidays.get(position);
