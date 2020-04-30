@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SGHolidays</string>
+    <array name="arrayTypes">
+        <item>Secular</item>
+        <item>Ethnic, Religion</item>
+    </array>
+</resources>
