@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -23,18 +26,18 @@ public class Holiday extends AppCompatActivity {
         setContentView(R.layout.activity_holiday);
 
         Intent i = getIntent();
-        String name = i.getStringExtra("positionName");
+        final String name = i.getStringExtra("positionName");
         TextView tvName = (TextView) findViewById(R.id.tvHolidayType);
         tvName.setText(name);
 
         lv = (ListView) findViewById(R.id.lvHolidays);
 
-        ArrayList<CurrentHolidays> secularHolidays = new ArrayList<CurrentHolidays>();
+        final ArrayList<CurrentHolidays> secularHolidays = new ArrayList<CurrentHolidays>();
         secularHolidays.add(new CurrentHolidays("New Year's Day","1 January 2020", R.drawable.new_year));
         secularHolidays.add(new CurrentHolidays("Labour Day","1 May 2020",R.drawable.labour_day));
         secularHolidays.add(new CurrentHolidays("Christmas Day", "25 December 2020",R.drawable.christmas));
 
-        ArrayList<CurrentHolidays> EthnicAndReligionHolidays = new ArrayList<CurrentHolidays>();
+        final ArrayList<CurrentHolidays> EthnicAndReligionHolidays = new ArrayList<CurrentHolidays>();
         EthnicAndReligionHolidays.add(new CurrentHolidays("Chinese New Year","25 - 26 January", R.drawable.cny));
         EthnicAndReligionHolidays.add(new CurrentHolidays("Good Friday","10 April", R.drawable.goodfriday));
         EthnicAndReligionHolidays.add(new CurrentHolidays("Vesak Day","7 May 2020", R.drawable.vesak_day));
@@ -51,5 +54,21 @@ public class Holiday extends AppCompatActivity {
             aa = new HolidayAdapter(this, R.layout.row , EthnicAndReligionHolidays);
             lv.setAdapter(aa);
         }
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                CurrentHolidays selectedHoliday;
+                if (name.equalsIgnoreCase("Secular")) {
+                    selectedHoliday = secularHolidays.get(position);
+                } else {
+                    selectedHoliday = EthnicAndReligionHolidays.get(position);
+                }
+
+                Toast.makeText(Holiday.this, "Holiday: " + selectedHoliday.getName()
+                                + " Date: " + selectedHoliday.getDate(),
+                        Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
